@@ -1,0 +1,83 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="yatsevich" id="002-1">
+        <preConditions onFail="WARN">
+            <not>
+                <tableExists tableName="roles"/>
+            </not>
+        </preConditions>
+        <rollback>
+            <dropTable tableName="roles"/>
+        </rollback>
+        <createTable tableName="roles">
+            <column name="role_id" type="bigint" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+            <column name="role_name" type="varchar(255)">
+                <constraints nullable="false" unique="true" />
+            </column>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=INNODB"/>
+        </modifySql>
+
+    </changeSet>
+
+    <changeSet author="yatsevich" id="002-2" dbms="oracle,postgresql">
+        <preConditions onFail="WARN">
+            <not>
+                <sequenceExists sequenceName="roles_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="roles_id_seq" startValue="1" incrementBy="1" />
+        <rollback>
+            <dropSequence sequenceName="roles_id_seq"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="yatsevich" id="002-3" dbms="oracle,postgresql">
+        <addDefaultValue tableName="roles" columnName="role_id" defaultValueSequenceNext="roles_id_seq"/>
+    </changeSet>
+
+    <changeSet author="yatsevich" id="002-4">
+        <preConditions onFail="WARN">
+            <not>
+                <tableExists tableName="users_roles"/>
+            </not>
+        </preConditions>
+        <rollback>
+            <dropTable tableName="users_roles"/>
+        </rollback>
+        <createTable tableName="users_roles">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=INNODB"/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet author="yatsevich" id="002-5">
+        <addPrimaryKey tableName="users_roles" columnNames="user_id, role_id" />
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="users_roles"
+                                 constraintName="users_roles_user_id_fk"
+                                 referencedColumnNames="user_id"
+                                 referencedTableName="users"/>
+        <addForeignKeyConstraint baseColumnNames="role_id"
+                                 baseTableName="users_roles"
+                                 constraintName="users_roles_role_id_fk"
+                                 referencedColumnNames="role_id"
+                                 referencedTableName="roles"/>
+    </changeSet>
+
+</databaseChangeLog>

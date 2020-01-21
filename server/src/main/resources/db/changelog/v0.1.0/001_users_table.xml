@@ -1,0 +1,55 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="yatsevich" id="001-1">
+        <preConditions onFail="WARN">
+            <not>
+                <tableExists tableName="users"/>
+            </not>
+        </preConditions>
+        <rollback>
+            <dropTable tableName="users"/>
+        </rollback>
+        <createTable tableName="users">
+            <column name="user_id" type="bigint" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true" />
+            </column>
+            <column name="lastname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="firstname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=INNODB"/>
+        </modifySql>
+
+    </changeSet>
+
+    <changeSet author="yatsevich" id="001-2" dbms="oracle,postgresql">
+        <preConditions onFail="WARN">
+            <not>
+                <sequenceExists sequenceName="users_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="users_id_seq" startValue="1" incrementBy="1" />
+        <rollback>
+            <dropSequence sequenceName="users_id_seq"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="yatsevich" id="001-3" dbms="oracle,postgresql">
+        <addDefaultValue columnName="user_id" tableName="users" defaultValueSequenceNext="users_id_seq"/>
+    </changeSet>
+
+</databaseChangeLog>
