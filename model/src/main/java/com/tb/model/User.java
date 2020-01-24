@@ -21,8 +21,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class User extends AbstractBaseEntity<Long>
         implements MergeInstance<User, UserDto>, PatchInstance<User, UserDto> {
+    
     private static final long serialVersionUID = 1L;
-
     @Id
     @Column(name = "user_id", unique = true, nullable = false, updatable = false)
     @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", initialValue = 1, allocationSize = 1)

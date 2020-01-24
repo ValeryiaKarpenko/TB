@@ -21,4 +21,3 @@ CREATE TABLE users_roles (
 --rollback DROP TABLE IF EXISTS users_roles;
 --rollback DROP TABLE IF EXISTS roles;
 --roolback DROP SEQUENCE IF EXISTS roles_id_seq;
-
