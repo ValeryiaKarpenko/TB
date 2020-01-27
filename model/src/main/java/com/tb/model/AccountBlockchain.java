@@ -34,10 +34,5 @@ public class AccountBlockchain extends AbstractBaseEntity<Long>{
     @Getter
     @Setter
     private Integer balance;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @Getter
-    @Setter
-    private User user;
  
 }

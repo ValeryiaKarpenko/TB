@@ -53,6 +53,12 @@ public class User extends AbstractBaseEntity<Long>
     @Getter
     @Setter
     private List<Role> roles;
+    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_blockchain_id")
+    @Getter
+    @Setter
+    private AccountBlockchain accountBlockchain;
 
     @Override
     public User merge(UserDto dto) {
