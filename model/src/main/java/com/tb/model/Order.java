@@ -1,6 +1,6 @@
 package com.tb.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -52,5 +52,9 @@ public class Order extends AbstractBaseEntity<Long>{
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
     @Getter
     @Setter
-    private Set<OrderItem> orderItem;
+    private List<OrderItem> orderItem;
+    @Column(name = "amount")
+    @Getter
+    @Setter
+    private Integer amount;
 }

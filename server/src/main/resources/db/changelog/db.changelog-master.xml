@@ -1,17 +1,690 @@
-<databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-
-    <property name="autoIncrement" value="true" dbms="mysql,mssql,h2,sybase,db2,hsqldb"/>
-    <property name="autoIncrement" value="false" dbms="oracle,postgresql"/>
-
-    <!-- Managing auto generation of timestamp by Database -->
-    <property name="now" value="now()" dbms="mysql,hsqldb,postgresql,h2"/>
-    <property name="now" value="sysdate" dbms="oracle"/>
-    <property name="now" value="CURRENT_TIMESTAMP" dbms="mssql"/>
-
-    <includeAll path="db/changelog/v0.1.0"/>
-
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="user (generated)" id="1580201523196-1">
+        <createSequence sequenceName="account_blockchain_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-2">
+        <createSequence sequenceName="account_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-3">
+        <createSequence sequenceName="cafe_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-4">
+        <createSequence sequenceName="cafe_service_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-5">
+        <createSequence sequenceName="order_items_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-6">
+        <createSequence sequenceName="orders_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-7">
+        <createSequence sequenceName="roles_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-8">
+        <createSequence sequenceName="users_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-9">
+        <createTable tableName="accounts">
+            <column name="account_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="login" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-10">
+        <createTable tableName="accounts_blockchain">
+            <column name="account_blockchain_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="balance" type="INT"/>
+            <column name="mnemonic" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-11">
+        <createTable tableName="cafe_services">
+            <column name="cafe_service_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cost" type="INT"/>
+            <column name="service_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cafe_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-12">
+        <createTable tableName="cafes">
+            <column name="cafe_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_blockchain_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-13">
+        <createTable tableName="order_items">
+            <column name="order_item_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="count" type="INT"/>
+            <column name="cafe_service_id" type="BIGINT"/>
+            <column name="order_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-14">
+        <createTable tableName="orders">
+            <column name="order_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="INT"/>
+            <column name="cafe_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+            <column name="water_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-15">
+        <createTable tableName="roles">
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-16">
+        <createTable tableName="user_cafe">
+            <column name="user_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cafe_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-17">
+        <createTable tableName="users">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="firstname" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastname" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_blockchain_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-18">
+        <createTable tableName="users_roles">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-19">
+        <addPrimaryKey columnNames="account_blockchain_id" constraintName="accounts_blockchain_pkey" tableName="accounts_blockchain"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-20">
+        <addPrimaryKey columnNames="account_id" constraintName="accounts_pkey" tableName="accounts"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-21">
+        <addPrimaryKey columnNames="cafe_service_id" constraintName="cafe_services_pkey" tableName="cafe_services"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-22">
+        <addPrimaryKey columnNames="cafe_id" constraintName="cafes_pkey" tableName="cafes"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-23">
+        <addPrimaryKey columnNames="order_item_id" constraintName="order_items_pkey" tableName="order_items"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-24">
+        <addPrimaryKey columnNames="order_id" constraintName="orders_pkey" tableName="orders"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-25">
+        <addPrimaryKey columnNames="role_id" constraintName="roles_pkey" tableName="roles"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-26">
+        <addPrimaryKey columnNames="cafe_id, user_id, user_type" constraintName="user_cafe_pkey" tableName="user_cafe"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-27">
+        <addPrimaryKey columnNames="user_id" constraintName="users_pkey" tableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-28">
+        <addUniqueConstraint columnNames="email" constraintName="uk_6dotkott2kjsp8vw4d0m25fb7" tableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-29">
+        <addUniqueConstraint columnNames="role_name" constraintName="uk_716hgxp60ym1lifrdgp67xt5k" tableName="roles"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-30">
+        <addUniqueConstraint columnNames="address" constraintName="uk_7cbmka3bvy2nkc19lv5iyl14n" tableName="accounts_blockchain"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-31">
+        <addUniqueConstraint columnNames="login" constraintName="uk_cc2c9baeppipgy2rjeccwcqs0" tableName="accounts"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-32">
+        <addUniqueConstraint columnNames="user_type" constraintName="uk_iee2jdaw9qwwjkr414o35t5i7" tableName="user_cafe"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-33">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="users_roles" constraintName="fk2o0jvgh89lemvvo17cbqvdxaa" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-34">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="orders" constraintName="fk32ql8ubntj5uh44ph9659tiih" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-35">
+        <addForeignKeyConstraint baseColumnNames="order_id" baseTableName="order_items" constraintName="fkbioxgbv59vetrxe0ejfubep1w" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="order_id" referencedTableName="orders"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-36">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_cafe" constraintName="fkd5uxtu2m0q4ndxl317vcj1220" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-37">
+        <addForeignKeyConstraint baseColumnNames="cafe_id" baseTableName="cafe_services" constraintName="fkfts6fhpv26k4cnvx44i55c8hn" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cafe_id" referencedTableName="cafes"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-38">
+        <addForeignKeyConstraint baseColumnNames="water_id" baseTableName="orders" constraintName="fkitfh2nmtxq1spw08kf7swhcs9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-39">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="users_roles" constraintName="fkj6m8fwv7oqv74fcehir1a9ffy" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="role_id" referencedTableName="roles"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-40">
+        <addForeignKeyConstraint baseColumnNames="account_blockchain_id" baseTableName="users" constraintName="fkjpl3v3nqj38dvmr75tfa2loy7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="account_blockchain_id" referencedTableName="accounts_blockchain"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-41">
+        <addForeignKeyConstraint baseColumnNames="account_blockchain_id" baseTableName="cafes" constraintName="fkjvlsaa025mm1nn2h8i1tsrvcg" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="account_blockchain_id" referencedTableName="accounts_blockchain"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-42">
+        <addForeignKeyConstraint baseColumnNames="cafe_id" baseTableName="orders" constraintName="fkl1jq51kaclrgcpwhp7777fj83" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cafe_id" referencedTableName="cafes"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-43">
+        <addForeignKeyConstraint baseColumnNames="cafe_id" baseTableName="user_cafe" constraintName="fkmdoex2wibl9dpjmduanbkftgv" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cafe_id" referencedTableName="cafes"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-44">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="accounts" constraintName="fknjuop33mo69pd79ctplkck40n" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201523196-45">
+        <addForeignKeyConstraint baseColumnNames="cafe_service_id" baseTableName="order_items" constraintName="fkpsw291o5g6syfr0y7bev200fr" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cafe_service_id" referencedTableName="cafe_services"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-1">
+        <createSequence sequenceName="account_blockchain_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-2">
+        <createSequence sequenceName="account_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-3">
+        <createSequence sequenceName="cafe_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-4">
+        <createSequence sequenceName="cafe_service_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-5">
+        <createSequence sequenceName="order_items_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-6">
+        <createSequence sequenceName="orders_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-7">
+        <createSequence sequenceName="roles_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-8">
+        <createSequence sequenceName="users_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-9">
+        <createTable tableName="accounts">
+            <column name="account_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="login" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-10">
+        <createTable tableName="accounts_blockchain">
+            <column name="account_blockchain_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="balance" type="INT"/>
+            <column name="mnemonic" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-11">
+        <createTable tableName="cafe_services">
+            <column name="cafe_service_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cost" type="INT"/>
+            <column name="service_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cafe_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-12">
+        <createTable tableName="cafes">
+            <column name="cafe_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_blockchain_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-13">
+        <createTable tableName="order_items">
+            <column name="order_item_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="count" type="INT"/>
+            <column name="cafe_service_id" type="BIGINT"/>
+            <column name="order_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-14">
+        <createTable tableName="orders">
+            <column name="order_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="INT"/>
+            <column name="cafe_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+            <column name="water_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-15">
+        <createTable tableName="roles">
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-16">
+        <createTable tableName="user_cafe">
+            <column name="user_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cafe_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-17">
+        <createTable tableName="users">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="firstname" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastname" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_blockchain_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-18">
+        <createTable tableName="users_roles">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-19">
+        <addPrimaryKey columnNames="account_blockchain_id" constraintName="accounts_blockchain_pkey" tableName="accounts_blockchain"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-20">
+        <addPrimaryKey columnNames="account_id" constraintName="accounts_pkey" tableName="accounts"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-21">
+        <addPrimaryKey columnNames="cafe_service_id" constraintName="cafe_services_pkey" tableName="cafe_services"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-22">
+        <addPrimaryKey columnNames="cafe_id" constraintName="cafes_pkey" tableName="cafes"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-23">
+        <addPrimaryKey columnNames="order_item_id" constraintName="order_items_pkey" tableName="order_items"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-24">
+        <addPrimaryKey columnNames="order_id" constraintName="orders_pkey" tableName="orders"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-25">
+        <addPrimaryKey columnNames="role_id" constraintName="roles_pkey" tableName="roles"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-26">
+        <addPrimaryKey columnNames="cafe_id, user_id, user_type" constraintName="user_cafe_pkey" tableName="user_cafe"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-27">
+        <addPrimaryKey columnNames="user_id" constraintName="users_pkey" tableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-28">
+        <addUniqueConstraint columnNames="email" constraintName="uk_6dotkott2kjsp8vw4d0m25fb7" tableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-29">
+        <addUniqueConstraint columnNames="role_name" constraintName="uk_716hgxp60ym1lifrdgp67xt5k" tableName="roles"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-30">
+        <addUniqueConstraint columnNames="address" constraintName="uk_7cbmka3bvy2nkc19lv5iyl14n" tableName="accounts_blockchain"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-31">
+        <addUniqueConstraint columnNames="login" constraintName="uk_cc2c9baeppipgy2rjeccwcqs0" tableName="accounts"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-32">
+        <addUniqueConstraint columnNames="user_type" constraintName="uk_iee2jdaw9qwwjkr414o35t5i7" tableName="user_cafe"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-33">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="users_roles" constraintName="fk2o0jvgh89lemvvo17cbqvdxaa" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-34">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="orders" constraintName="fk32ql8ubntj5uh44ph9659tiih" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-35">
+        <addForeignKeyConstraint baseColumnNames="order_id" baseTableName="order_items" constraintName="fkbioxgbv59vetrxe0ejfubep1w" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="order_id" referencedTableName="orders"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-36">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_cafe" constraintName="fkd5uxtu2m0q4ndxl317vcj1220" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-37">
+        <addForeignKeyConstraint baseColumnNames="cafe_id" baseTableName="cafe_services" constraintName="fkfts6fhpv26k4cnvx44i55c8hn" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cafe_id" referencedTableName="cafes"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-38">
+        <addForeignKeyConstraint baseColumnNames="water_id" baseTableName="orders" constraintName="fkitfh2nmtxq1spw08kf7swhcs9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-39">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="users_roles" constraintName="fkj6m8fwv7oqv74fcehir1a9ffy" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="role_id" referencedTableName="roles"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-40">
+        <addForeignKeyConstraint baseColumnNames="account_blockchain_id" baseTableName="users" constraintName="fkjpl3v3nqj38dvmr75tfa2loy7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="account_blockchain_id" referencedTableName="accounts_blockchain"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-41">
+        <addForeignKeyConstraint baseColumnNames="account_blockchain_id" baseTableName="cafes" constraintName="fkjvlsaa025mm1nn2h8i1tsrvcg" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="account_blockchain_id" referencedTableName="accounts_blockchain"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-42">
+        <addForeignKeyConstraint baseColumnNames="cafe_id" baseTableName="orders" constraintName="fkl1jq51kaclrgcpwhp7777fj83" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cafe_id" referencedTableName="cafes"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-43">
+        <addForeignKeyConstraint baseColumnNames="cafe_id" baseTableName="user_cafe" constraintName="fkmdoex2wibl9dpjmduanbkftgv" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cafe_id" referencedTableName="cafes"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-44">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="accounts" constraintName="fknjuop33mo69pd79ctplkck40n" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201543617-45">
+        <addForeignKeyConstraint baseColumnNames="cafe_service_id" baseTableName="order_items" constraintName="fkpsw291o5g6syfr0y7bev200fr" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cafe_service_id" referencedTableName="cafe_services"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-1">
+        <createSequence sequenceName="account_blockchain_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-2">
+        <createSequence sequenceName="account_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-3">
+        <createSequence sequenceName="cafe_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-4">
+        <createSequence sequenceName="cafe_service_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-5">
+        <createSequence sequenceName="order_items_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-6">
+        <createSequence sequenceName="orders_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-7">
+        <createSequence sequenceName="roles_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-8">
+        <createSequence sequenceName="users_id_seq"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-9">
+        <createTable tableName="accounts">
+            <column name="account_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="login" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-10">
+        <createTable tableName="accounts_blockchain">
+            <column name="account_blockchain_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="balance" type="INT"/>
+            <column name="mnemonic" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-11">
+        <createTable tableName="cafe_services">
+            <column name="cafe_service_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cost" type="INT"/>
+            <column name="service_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cafe_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-12">
+        <createTable tableName="cafes">
+            <column name="cafe_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_blockchain_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-13">
+        <createTable tableName="order_items">
+            <column name="order_item_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="count" type="INT"/>
+            <column name="cafe_service_id" type="BIGINT"/>
+            <column name="order_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-14">
+        <createTable tableName="orders">
+            <column name="order_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="INT"/>
+            <column name="cafe_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+            <column name="water_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-15">
+        <createTable tableName="roles">
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-16">
+        <createTable tableName="user_cafe">
+            <column name="user_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cafe_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-17">
+        <createTable tableName="users">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="firstname" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastname" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_blockchain_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-18">
+        <createTable tableName="users_roles">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-19">
+        <addPrimaryKey columnNames="account_blockchain_id" constraintName="accounts_blockchain_pkey" tableName="accounts_blockchain"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-20">
+        <addPrimaryKey columnNames="account_id" constraintName="accounts_pkey" tableName="accounts"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-21">
+        <addPrimaryKey columnNames="cafe_service_id" constraintName="cafe_services_pkey" tableName="cafe_services"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-22">
+        <addPrimaryKey columnNames="cafe_id" constraintName="cafes_pkey" tableName="cafes"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-23">
+        <addPrimaryKey columnNames="order_item_id" constraintName="order_items_pkey" tableName="order_items"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-24">
+        <addPrimaryKey columnNames="order_id" constraintName="orders_pkey" tableName="orders"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-25">
+        <addPrimaryKey columnNames="role_id" constraintName="roles_pkey" tableName="roles"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-26">
+        <addPrimaryKey columnNames="cafe_id, user_id, user_type" constraintName="user_cafe_pkey" tableName="user_cafe"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-27">
+        <addPrimaryKey columnNames="user_id" constraintName="users_pkey" tableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-28">
+        <addUniqueConstraint columnNames="email" constraintName="uk_6dotkott2kjsp8vw4d0m25fb7" tableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-29">
+        <addUniqueConstraint columnNames="role_name" constraintName="uk_716hgxp60ym1lifrdgp67xt5k" tableName="roles"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-30">
+        <addUniqueConstraint columnNames="address" constraintName="uk_7cbmka3bvy2nkc19lv5iyl14n" tableName="accounts_blockchain"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-31">
+        <addUniqueConstraint columnNames="login" constraintName="uk_cc2c9baeppipgy2rjeccwcqs0" tableName="accounts"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-32">
+        <addUniqueConstraint columnNames="user_type" constraintName="uk_iee2jdaw9qwwjkr414o35t5i7" tableName="user_cafe"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-33">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="users_roles" constraintName="fk2o0jvgh89lemvvo17cbqvdxaa" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-34">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="orders" constraintName="fk32ql8ubntj5uh44ph9659tiih" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-35">
+        <addForeignKeyConstraint baseColumnNames="order_id" baseTableName="order_items" constraintName="fkbioxgbv59vetrxe0ejfubep1w" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="order_id" referencedTableName="orders"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-36">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_cafe" constraintName="fkd5uxtu2m0q4ndxl317vcj1220" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-37">
+        <addForeignKeyConstraint baseColumnNames="cafe_id" baseTableName="cafe_services" constraintName="fkfts6fhpv26k4cnvx44i55c8hn" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cafe_id" referencedTableName="cafes"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-38">
+        <addForeignKeyConstraint baseColumnNames="water_id" baseTableName="orders" constraintName="fkitfh2nmtxq1spw08kf7swhcs9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-39">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="users_roles" constraintName="fkj6m8fwv7oqv74fcehir1a9ffy" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="role_id" referencedTableName="roles"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-40">
+        <addForeignKeyConstraint baseColumnNames="account_blockchain_id" baseTableName="users" constraintName="fkjpl3v3nqj38dvmr75tfa2loy7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="account_blockchain_id" referencedTableName="accounts_blockchain"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-41">
+        <addForeignKeyConstraint baseColumnNames="account_blockchain_id" baseTableName="cafes" constraintName="fkjvlsaa025mm1nn2h8i1tsrvcg" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="account_blockchain_id" referencedTableName="accounts_blockchain"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-42">
+        <addForeignKeyConstraint baseColumnNames="cafe_id" baseTableName="orders" constraintName="fkl1jq51kaclrgcpwhp7777fj83" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cafe_id" referencedTableName="cafes"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-43">
+        <addForeignKeyConstraint baseColumnNames="cafe_id" baseTableName="user_cafe" constraintName="fkmdoex2wibl9dpjmduanbkftgv" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cafe_id" referencedTableName="cafes"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-44">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="accounts" constraintName="fknjuop33mo69pd79ctplkck40n" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="user (generated)" id="1580201817373-45">
+        <addForeignKeyConstraint baseColumnNames="cafe_service_id" baseTableName="order_items" constraintName="fkpsw291o5g6syfr0y7bev200fr" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cafe_service_id" referencedTableName="cafe_services"/>
+    </changeSet>
 </databaseChangeLog>
