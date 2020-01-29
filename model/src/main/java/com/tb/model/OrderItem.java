@@ -40,7 +40,7 @@ public class OrderItem extends AbstractBaseEntity<Long>{
     @JoinColumn(name = "cafe_service_id")
     @Getter
     @Setter
-    private CafeService cafeService;
+    private CafeOffer cafeService;
     @Column(name = "count")
     @Getter
     @Setter

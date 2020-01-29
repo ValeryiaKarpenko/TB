@@ -12,7 +12,7 @@ import lombok.Setter;
 @Table(name = "cafe_services", schema = "PUBLIC")
 @Cacheable
 @EqualsAndHashCode(callSuper = true)
-public class CafeService extends AbstractBaseEntity<Long> {
+public class CafeOffer extends AbstractBaseEntity<Long> {
 
     private static final long serialVersionUID = 4405998570266266751L;
     @Id
