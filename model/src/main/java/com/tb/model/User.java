@@ -21,8 +21,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class User extends AbstractBaseEntity<Long>
         implements MergeInstance<User, UserDto>, PatchInstance<User, UserDto> {
+    
     private static final long serialVersionUID = 1L;
-
     @Id
     @Column(name = "user_id", unique = true, nullable = false, updatable = false)
     @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", initialValue = 1, allocationSize = 1)
@@ -53,6 +53,12 @@ public class User extends AbstractBaseEntity<Long>
     @Getter
     @Setter
     private List<Role> roles;
+    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_blockchain_id")
+    @Getter
+    @Setter
+    private AccountBlockchain accountBlockchain;
 
     @Override
     public User merge(UserDto dto) {

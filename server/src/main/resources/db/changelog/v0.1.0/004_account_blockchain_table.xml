@@ -1,0 +1,61 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+        
+    <changeSet id="004-1" author="karpenko">
+        <preConditions onFail="WARN">
+            <not>
+                <tableExists tableName="accouts"/>
+            </not>
+        </preConditions>
+        <rollback>
+        	<dropTable tableName="accounts_blockchain"/>
+        </rollback>
+        <createTable tableName="accounts_blockchain">
+        	<column name="account_blockchain_id" type="bigint" autoIncrement="${autoIncrement}" startWith="1">
+        		<constraints nullable="false" primaryKey="true" />
+        	</column>
+        	<column name="address" type="varchar(255)">
+        		<constraints nullable="false" unique ="true" />
+        	</column>
+        	<column name="mnemonic" type="varchar(255)">
+        		<constraints nullable="false" />
+        	</column>
+        	<column name="balance" type="INT">
+        	</column>
+        	<column name="user_id" type="bigint">
+        		<constraints nullable="false"/>
+        	</column>
+        </createTable>
+        
+         <modifySql dbms="mysql">
+            <append value=" ENGINE=INNODB"/>
+        </modifySql>
+        
+    </changeSet> 
+    
+    <changeSet author="karpenko" id="004-2" dbms="oracle,postgresql">
+        <preConditions onFail="WARN">
+            <not>
+            	<sequenceExists sequenceName="account_blockchain_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="account_blockchain_id_seq" startValue="1" incrementBy="1"/>
+        <rollback>
+        	<dropSequence sequenceName="account_blockchain_id_seq"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="karpenko" id="004-3" dbms="oracle,postgresql">
+        <addDefaultValue tableName="accounts_blockchain" columnName="account_blockchain_id" defaultValueSequenceNext="account_blockchain_id_seq"/>
+    </changeSet>
+    
+    <changeSet id="004-4" author="">
+    	<addForeignKeyConstraint constraintName="account_blockchain_user_id_fk" 
+    							 referencedTableName="users" 
+    							 baseColumnNames="account_blockchain_id" 
+    							 baseTableName="accounts_blockchain" 
+    							 referencedColumnNames="user_id"/>
+    </changeSet>
+</databaseChangeLog>  

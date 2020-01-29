@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @AllArgsConstructor
-public enum UserRole {
-    ADMIN("admin"), OWNER("owner"), WAITER("waiter"), USER("user");
+public enum UserType {
+    OWNER("owner"), WAITER("waiter");
 
     @Getter
     @Setter
