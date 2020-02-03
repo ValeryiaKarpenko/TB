@@ -18,7 +18,7 @@ public class UserCafeDaoImpl implements UserCafeDao{
     }
 
     @Override
-    public Long create(UserCafe obj) {
+    public UserCafe create(UserCafe obj) {
         // TODO Auto-generated method stub
         return null;
     }

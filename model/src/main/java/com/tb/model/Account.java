@@ -30,10 +30,6 @@ public class Account extends AbstractBaseEntity<Long>{
     @Getter
     @Setter
     private String password;
-    @Column(name = "email", nullable = false)
-    @Getter
-    @Setter
-    private String email;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @Getter

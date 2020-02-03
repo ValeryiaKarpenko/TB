@@ -8,7 +8,7 @@ public interface GenericDao<T, P extends Serializable> {
 
     Class<T> getEntityClass();
 
-    P create(T obj);
+    T create(T obj);
 
     void update(T obj);
 

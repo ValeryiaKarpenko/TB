@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tb.dal.api.AccountDao;
 import com.tb.model.Account;
+import com.tb.model.Account_;
 
 @Repository
 public class AccountDaoImpl extends AbstractDao<Account, Long> implements AccountDao{
@@ -11,6 +12,11 @@ public class AccountDaoImpl extends AbstractDao<Account, Long> implements Accoun
     @Override
     public Class<Account> getEntityClass() {
         return Account.class;
+    }
+
+    @Override
+    public Account getAccountByLogin(String login) {
+        return getRecordByField(Account_.login, login, null);
     }
 
 }

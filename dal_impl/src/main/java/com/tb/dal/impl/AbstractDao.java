@@ -29,9 +29,9 @@ public abstract class AbstractDao<T extends AbstractBaseEntity<P>, P extends Ser
     }
 
     @Override
-    public P create(T obj) {
+    public T create(T obj) {
          this.getEntityManager().persist(obj);
-         return obj.getId();
+         return obj;
     }
 
     @Override

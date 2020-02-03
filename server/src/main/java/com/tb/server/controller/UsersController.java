@@ -28,11 +28,6 @@ public class UsersController {
         return responseHandler.handle(() ->  userService.getAllUsers());
     }
 
-    @GetMapping("/all-with-roles")
-    public ResponseEntity getAllUsersWithRoles(){
-        return responseHandler.handle(() ->  userService.getAllUsersWithRoles());
-    }
-
     @GetMapping(path = "/getById/{id}")
     public ResponseEntity getById(@PathVariable Long id) {
         return responseHandler.handle(() -> userService.getUserById(id));
@@ -42,6 +37,7 @@ public class UsersController {
     public ResponseEntity register(@RequestBody UserDto user) {
         return voidResponseHandler.handle(() ->  userService.createUser(user));
     }
+    
     @PutMapping(value="/{id}")
     public ResponseEntity updateUser(@PathVariable("id") Long id, @RequestBody UserDto user) {
         return voidResponseHandler.handle(() ->  userService.updateUser(id, user));
