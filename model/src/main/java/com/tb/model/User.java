@@ -38,10 +38,6 @@ public class User extends AbstractBaseEntity<Long>
     @Getter
     @Setter
     private String firstName;
-    @Column(name = "password", nullable = false)
-    @Getter
-    @Setter
-    private String password;
     @Getter
     @Setter
     @Column(name = "email", nullable = false, unique = true)

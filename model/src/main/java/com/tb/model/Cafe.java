@@ -2,7 +2,10 @@ package com.tb.model;
 
 import javax.persistence.*;
 
+import com.tb.dto.CafeDto;
 import com.tb.model.api.AbstractBaseEntity;
+import com.tb.model.api.MergeInstance;
+import com.tb.model.api.PatchInstance;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,7 +15,8 @@ import lombok.Setter;
 @Table(name = "cafes", schema = "PUBLIC")
 @Cacheable
 @EqualsAndHashCode(callSuper = true)
-public class Cafe extends AbstractBaseEntity<Long> {
+public class Cafe extends AbstractBaseEntity<Long>
+        implements MergeInstance<Cafe, CafeDto>, PatchInstance<Cafe, CafeDto> {
 
     private static final long serialVersionUID = -988452508961646591L;
     @Id
@@ -31,4 +35,17 @@ public class Cafe extends AbstractBaseEntity<Long> {
     @Getter
     @Setter
     private AccountBlockchain accountBlockchain;
+    
+    @Override
+    public Cafe patch(CafeDto dto) {
+        this.setName(dto.getName());
+        return this;
+    }
+    @Override
+    public Cafe merge(CafeDto dto) {
+        if (dto.getName() != null) {
+            this.setName(dto.getName());
+        }
+        return this;
+    }
 }

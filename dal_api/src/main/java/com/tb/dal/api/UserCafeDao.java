@@ -1,7 +1,10 @@
 package com.tb.dal.api;
 
-import com.tb.model.UserCafe;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserCafeDao extends GenericDao<UserCafe, Long>{
+import com.tb.model.UserCafe;
+import com.tb.model.UserCafeId;
+
+public interface UserCafeDao extends JpaRepository<UserCafe, UserCafeId>{
 
 }

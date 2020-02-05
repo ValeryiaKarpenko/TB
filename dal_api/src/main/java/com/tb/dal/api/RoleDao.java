@@ -3,11 +3,12 @@ package com.tb.dal.api;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.tb.model.Cafe;
+import com.tb.enums.UserRole;
+import com.tb.model.Role;
 
 @Repository
-public interface CafeDao extends JpaRepository<Cafe, Long>{
+public interface RoleDao extends JpaRepository<Role, Long> {
 
-    Cafe getCafeByName(String name);
+    Role findByName(UserRole user);
 
 }

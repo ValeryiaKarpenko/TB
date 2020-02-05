@@ -143,32 +143,28 @@
 			<plugin>
 				<groupId>org.liquibase</groupId>
 				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>3.5.5</version>
+				<version>3.8.5</version>
 				<configuration>
-					<propertyFile>server/src/main/resources/application.properties</propertyFile>
+					<propertyFile>server/src/main/resources/liquibase.properties</propertyFile>
 				</configuration>
-				<dependencies>
+			<!--	<dependencies>
 					<dependency>
 						<groupId>org.liquibase.ext</groupId>
 						<artifactId>liquibase-hibernate5</artifactId>
 						<version>3.6</version>
 					</dependency>
 					<dependency>
-						<groupId>javax.validation</groupId>
-						<artifactId>validation-api</artifactId>
-						<version>2.0.1.Final</version>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-beans</artifactId>
+						<version>5.2.3.RELEASE</version>
 					</dependency>
 					<dependency>
-						<groupId>org.springframework.boot</groupId>
-						<artifactId>spring-boot-starter-data-jpa</artifactId>
-						<version>2.1.2.RELEASE</version>
-						</dependency>
-						<dependency>
-							<groupId>org.springframework</groupId>
-							<artifactId>spring-beans</artifactId>
-							<version>4.3.2.RELEASE</version>
-						</dependency>
+						<groupId>org.springframework.data</groupId>
+						<artifactId>spring-data-jpa</artifactId>
+						<version>2.2.4.RELEASE</version>
+					</dependency>
 				</dependencies>
+			 -->
 			</plugin>
 		</plugins>
 	</build>
