@@ -16,6 +16,7 @@ import com.tb.service.api.AccountBlockchainService;
 import com.tb.service.api.UserService;
 import com.tb.service.impl.exceptions.BadDataException;
 import com.tb.service.impl.exceptions.DataNotFoundException;
+import com.tb.service.utils.CustomCryptEncoder;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -26,6 +27,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private static final String NOT_FOUND_MSG = "User with {0} {1} not found";
+    
+    @Autowired
+    private CustomCryptEncoder customCryptEncoder;
 
     @Autowired
     private UserDao userDao;
@@ -47,7 +51,7 @@ public class UserServiceImpl implements UserService {
         if (accountDao.getAccountByLogin(userDto.getLogin()) != null) {
             throw new BadDataException("Login already taken!");
         }
-        AccountBlockchain newAccountBlockchain = accountBlockchainService.createAccountBlockchain(0);
+        AccountBlockchain newAccountBlockchain = accountBlockchainService.createAccountBlockchain();
         User newUser = new User();
         newUser.merge(userDto);
         newUser.setAccountBlockchain(newAccountBlockchain);
@@ -56,7 +60,7 @@ public class UserServiceImpl implements UserService {
         
         Account newAccount = new Account();
         newAccount.setLogin(userDto.getLogin());
-        newAccount.setPassword(userDto.getPassword());
+        newAccount.setPassword(customCryptEncoder.encode(userDto.getPassword()));
         newAccount.setUser(newUser);
         accountDao.create(newAccount);
     }

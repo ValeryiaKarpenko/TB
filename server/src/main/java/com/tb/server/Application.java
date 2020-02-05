@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EntityScan(basePackages = {"com.tb.model"})
 @EnableJpaRepositories({"com.tb.dal.api"})
-@ComponentScan({"com.tb.dal.impl", "com.tb.service.impl", "com.tb.server"})
+@ComponentScan({"com.tb.dal.impl", "com.tb.service", "com.tb.server"})
 public class Application  {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

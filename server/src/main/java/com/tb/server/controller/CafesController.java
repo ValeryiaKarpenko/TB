@@ -2,6 +2,7 @@ package com.tb.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,8 @@ public class CafesController {
     private RestVoidResponseHandler voidResponseHandler;
     
     @PostMapping
-    public ResponseEntity register(@RequestBody CafeDto cafe) {
-        return voidResponseHandler.handle(() ->  cafeService.createCafe(cafe));
+    public ResponseEntity register(@RequestBody CafeDto cafe, Authentication authentication) {
+        return voidResponseHandler.handle(() ->  cafeService.createCafe(cafe, authentication.getName()));
     }
 
 }

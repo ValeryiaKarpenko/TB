@@ -4,6 +4,6 @@ import com.tb.model.AccountBlockchain;
 
 public interface AccountBlockchainService {
 
-    AccountBlockchain createAccountBlockchain(Integer balance);
+    AccountBlockchain createAccountBlockchain();
 
 }

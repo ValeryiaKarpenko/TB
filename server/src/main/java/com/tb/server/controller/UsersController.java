@@ -3,12 +3,10 @@ package com.tb.server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.tb.dto.UserDto;
 import com.tb.service.api.UserService;
 import com.tb.service.api.handler.RestResponseHandler;
 import com.tb.service.api.handler.RestVoidResponseHandler;
-
 
 @RestController
 @RequestMapping(value = "/users")
@@ -33,7 +31,7 @@ public class UsersController {
         return responseHandler.handle(() -> userService.getUserById(id));
     }
 
-    @PostMapping("/register")
+    @PostMapping("/sign-up")
     public ResponseEntity register(@RequestBody UserDto user) {
         return voidResponseHandler.handle(() ->  userService.createUser(user));
     }
@@ -47,5 +45,4 @@ public class UsersController {
     public ResponseEntity deleteUser(@PathVariable Long id) {
         return voidResponseHandler.handle(() -> userService.deleteUser(id));
     }
-
 }

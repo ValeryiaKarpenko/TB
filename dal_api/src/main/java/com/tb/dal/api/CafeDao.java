@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.tb.model.Cafe;
 
 @Repository
-public interface CafeDao extends  JpaRepository<Cafe, Long>{
+public interface CafeDao extends JpaRepository<Cafe, Long>{
 
     Cafe getCafeByName(String name);
 

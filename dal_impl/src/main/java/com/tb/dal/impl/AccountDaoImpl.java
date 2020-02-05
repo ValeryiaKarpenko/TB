@@ -1,5 +1,7 @@
 package com.tb.dal.impl;
 
+import javax.persistence.EntityGraph;
+
 import org.springframework.stereotype.Repository;
 
 import com.tb.dal.api.AccountDao;
@@ -17,6 +19,17 @@ public class AccountDaoImpl extends AbstractDao<Account, Long> implements Accoun
     @Override
     public Account getAccountByLogin(String login) {
         return getRecordByField(Account_.login, login, null);
+    }
+    
+    @Override
+    public Account getAccountByLoginWithUser(String login) {
+        return getRecordByField(Account_.login, login, createUserGraph());
+    }
+    
+    private EntityGraph<Account> createUserGraph() {
+        EntityGraph<Account> graph = getEntityManager().createEntityGraph(Account.class);
+        graph.addAttributeNodes(Account_.user);
+        return graph;
     }
 
 }
