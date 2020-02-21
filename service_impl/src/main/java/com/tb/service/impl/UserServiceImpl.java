@@ -3,20 +3,22 @@ package com.tb.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tb.dal.api.AccountDao;
 import com.tb.dal.api.RoleDao;
 import com.tb.dal.api.UserDao;
 import com.tb.dto.UserDto;
 import com.tb.enums.UserRole;
-import com.tb.model.Account;
 import com.tb.model.AccountBlockchain;
+import com.tb.model.Role;
 import com.tb.model.User;
 import com.tb.service.api.AccountBlockchainService;
+import com.tb.service.api.AccountService;
 import com.tb.service.api.UserService;
 import com.tb.service.impl.exceptions.BadDataException;
 import com.tb.service.impl.exceptions.DataNotFoundException;
-import com.tb.service.utils.CustomCryptEncoder;
+import com.tb.service.utils.ImageSaver;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -27,9 +29,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private static final String NOT_FOUND_MSG = "User with {0} {1} not found";
-    
-    @Autowired
-    private CustomCryptEncoder customCryptEncoder;
 
     @Autowired
     private UserDao userDao;
@@ -38,10 +37,16 @@ public class UserServiceImpl implements UserService {
     private AccountDao accountDao;
 
     @Autowired
+    private AccountService accountService;
+
+    @Autowired
     private RoleDao roleDao;
 
     @Autowired
     private AccountBlockchainService accountBlockchainService;
+
+    @Autowired
+    private ImageSaver imageSaver;
 
     @Override
     public void createUser(UserDto userDto) {
@@ -57,72 +62,40 @@ public class UserServiceImpl implements UserService {
         newUser.setAccountBlockchain(newAccountBlockchain);
         newUser.setRoles(Arrays.asList(roleDao.findByName(UserRole.USER)));
         userDao.create(newUser);
-        
-        Account newAccount = new Account();
-        newAccount.setLogin(userDto.getLogin());
-        newAccount.setPassword(customCryptEncoder.encode(userDto.getPassword()));
-        newAccount.setUser(newUser);
-        accountDao.create(newAccount);
+        accountService.createAccount(userDto, newUser);
     }
 
     @Override
-    public void deleteUser(Long id) {
-        userDao.deleteByID(id);
-    }
-
-    @Override
-    public List<User> getAllUsers() {
-        return userDao.getAll();
-    }
-
-    @Override
-    public List<User> getAllUsersWithRoles() {
-        return userDao.getAllUsersWithRoles();
-    }
-
-    @Override
-    public User getUserByEmail(String email) {
-        User user = userDao.getUserByEmail(email);
+    public User getCurrentUser(String login) {
+        User user = accountDao.getAccountByLoginWithUser(login).getUser();
         if (user == null) {
-            throw new DataNotFoundException(MessageFormat.format(NOT_FOUND_MSG, "email", email));
+            throw new DataNotFoundException("User not found");
         }
         return user;
+    }
+
+    @Override
+    public void addRole(User user, UserRole role) {
+        List<Role> roles = user.getRoles();
+        roles.add(roleDao.findByName(role));
+        user.setRoles(roles);
+        userDao.update(user);
     }
 
     @Override
     public User getUserById(Long id) {
-        User user = userDao.getUserWithRolesById(id);
+        User user = userDao.getById(id);
         if (user == null) {
             throw new DataNotFoundException(MessageFormat.format(NOT_FOUND_MSG, "id", id));
-        }
-
-        return user;
-    }
-
-    @Override
-    public User getUserByFirstName(String name) {
-        User user = userDao.getUserByFirstName(name);
-        if (user == null) {
-            throw new DataNotFoundException(MessageFormat.format(NOT_FOUND_MSG, "name", name));
         }
         return user;
     }
 
     @Override
-    public void updateUser(Long id, UserDto userDto) {
-        User record = userDao.toReference(id);
-        if (record == null) {
-            throw new DataNotFoundException(MessageFormat.format(NOT_FOUND_MSG, "id", id));
-        }
-        userDao.update(record.merge(userDto));
-    }
-
-    @Override
-    public void patchUser(Long id, UserDto userDto) {
-        User record = userDao.getById(id);
-        if (record == null) {
-            throw new DataNotFoundException(MessageFormat.format(NOT_FOUND_MSG, "id", id));
-        }
-        userDao.update(record.patch(userDto));
+    public void updateUserImage(Long id, MultipartFile file) {
+        User user = getUserById(id);
+        String photoUrl = imageSaver.updateImage(file, user.getEmail(), user.getPhotoUrl());
+        user.setPhotoUrl(photoUrl);
+        userDao.update(user);
     }
 }

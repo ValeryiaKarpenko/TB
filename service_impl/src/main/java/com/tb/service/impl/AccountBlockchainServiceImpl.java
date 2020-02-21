@@ -8,6 +8,8 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -23,7 +25,7 @@ import com.tb.service.utils.CustomCryptEncoder;
 
 @Service
 @Transactional
-@PropertySource({ "classpath:blockchain.properties" })
+@PropertySource({ "classpath:service.properties" })
 public class AccountBlockchainServiceImpl implements AccountBlockchainService{
     
     @Value("${blockchain.host}")
@@ -47,6 +49,8 @@ public class AccountBlockchainServiceImpl implements AccountBlockchainService{
     @Autowired
     private CloseableHttpClient client;
     
+    private final Logger logger = LoggerFactory.getLogger(AccountBlockchainServiceImpl.class);
+    
     @Override
     public AccountBlockchain createAccountBlockchain(){
         Map<String, String> map = null;
@@ -69,6 +73,7 @@ public class AccountBlockchainServiceImpl implements AccountBlockchainService{
             EntityUtils.consume(entity);
             response.close();
         } catch (IOException e) {
+            logger.error("Can't create account in blockchain: " + e);
             e.printStackTrace();
         }
         

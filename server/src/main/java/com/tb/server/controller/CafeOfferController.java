@@ -1,30 +1,33 @@
 package com.tb.server.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tb.dto.CafeDto;
-import com.tb.service.api.CafeService;
+import com.tb.dto.CafeOfferDto;
+import com.tb.service.api.CafeOfferService;
 import com.tb.service.api.handler.RestVoidResponseHandler;
 
 @RestController
-@RequestMapping(value = "/cafes")
-public class CafesController {
-    
+@RequestMapping(value = "/services")
+public class CafeOfferController {
+
     @Autowired
-    private CafeService cafeService;
-    
+    private CafeOfferService cafeOfferService;
+
     @Autowired
     private RestVoidResponseHandler voidResponseHandler;
-    
+
     @PostMapping
-    public ResponseEntity register(@RequestBody CafeDto cafe, Authentication authentication) {
-        return voidResponseHandler.handle(() ->  cafeService.createCafe(cafe, authentication.getName()));
+    public ResponseEntity addCafeOffer(@Valid @RequestBody CafeOfferDto cafeOffer) {
+        return voidResponseHandler.handle(() -> cafeOfferService.createCafeOffer(cafeOffer,
+                SecurityContextHolder.getContext().getAuthentication().getName()));
     }
 
 }

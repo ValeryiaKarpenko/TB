@@ -42,6 +42,10 @@ public class User extends AbstractBaseEntity<Long>
     @Setter
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+    @Getter
+    @Setter
+    @Column(name = "photo_url")
+    private String photoUrl;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {

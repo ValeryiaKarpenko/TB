@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 @Configuration
-@PropertySource({ "classpath:blockchain.properties" })
+@PropertySource({ "classpath:service.properties" })
 public class BlockchainConfiguration {
     
     @Autowired

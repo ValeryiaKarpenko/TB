@@ -1,28 +1,21 @@
 package com.tb.service.api;
 
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tb.dto.UserDto;
+import com.tb.enums.UserRole;
 import com.tb.model.User;
 
 
 public interface UserService {
 
-    List<User> getAllUsers();
+    void createUser(UserDto user);
+    
+    User getCurrentUser(String login);
 
-    List<User> getAllUsersWithRoles();
-
-    User getUserByEmail(String email);
+    void addRole(User user, UserRole role);
 
     User getUserById(Long id);
 
-    User getUserByFirstName(String name);
-
-    void createUser(UserDto user);
-
-    void deleteUser(Long id);
-
-    void updateUser(Long id, UserDto user);
-
-    void patchUser(Long id, UserDto user);
+    void updateUserImage(Long id, MultipartFile file);
 }
